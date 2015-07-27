@@ -47,45 +47,44 @@
                                 <div class="form-group">
                                     <label class="form-label">Módulo</label>
                                     <div class="controls">
-                                        <input type="text" name="modulo" value="<?= ($pagina->modulo) ? $pagina->modulo : 'admin' ?>" class="form-control">
+                                        <input type="text" name="modulo" value="admin" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Controller</label>
                                     <div class="controls">
-                                        <input type="text" name="controller" value="<?= set_value('controller') ? set_value('controller') : $pagina->controller ?>" class="form-control">
+                                        <input type="text" name="controller" value="<?= set_value('controller') ?>" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Action</label>
                                     <div class="controls">
-                                        <input type="text" name="action" value="<?= set_value('action') ? set_value('action') : $pagina-> action ?>" class="form-control">
+                                        <input type="text" name="action" value="<?= set_value('action') ?>" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Apelido para o Controller:</label>
                                     <div class="controls">
-                                        <input type="text" name="alias_controller" value="<?= set_value('alias_controller') ? set_value('alias_controller') : $pagina->alias_controller ?>" class="form-control">
+                                        <input type="text" name="alias_controller" value="<?= set_value('alias_controller') ?>" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Apelido para a Action:</label>
                                     <div class="controls">
-                                        <input type="text" name="alias_action" value="<?= set_value('alias_action') ? set_value('alias_action') : $pagina->alias_action ?>" class="form-control">
+                                        <input type="text" name="alias_action" value="<?= set_value('alias_action') ?>" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <label class="form-label">Permissão:</label>
                                     <div class="radio radio-success">
-                                        <input id="yes" type="radio" name="ativo" value="1" <?= ($pagina->ativo == 1) ? 'checked' : '' ?>>
+                                        <input id="yes" type="radio" name="ativo" value="1" checked="checked">
                                         <label for="yes">Sim</label>
-                                        <input id="no" type="radio" name="ativo" value="0" <?= ($pagina->ativo == 1) ? '' : 'checked' ?>>
+                                        <input id="no" type="radio" name="ativo" value="0">
                                         <label for="no">Não</label>
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="controls">
-                                        <input type="hidden" name="id" value="<?= $pagina->id ?>">
                                         <button id="salvar" type="button" class="btn btn-primary btn-cons">Salvar</button>
                                     </div>
                                 </div>
@@ -102,7 +101,7 @@
 
 <script>
     $("#salvar").click(function () {
-        $("#form").attr('action', '/admin/pagina/alterar');
+        $("#form").attr('action', '<?= base_url('admin/acao/inserir') ?>');
         $("#form").submit();
     });
 </script>

@@ -40,7 +40,7 @@
                 <div class="span12">
                     <div class="grid simple ">
                         <div class="grid-title">
-                            <h4>Paginas do Sistema</h4>
+                            <h4>Ações do Sistema</h4>
                         </div>
                         <div class="grid-body ">
                             <form id="form" method="post">
@@ -48,9 +48,9 @@
                                     <div class="row">
                                         <div class="col-md-6">
                                             <div id="example2_length" class="dataTables_length">
-                                                <?php if ($adicionarPagina) : ?>
+                                                <?php if ($adicionarAcao) : ?>
                                                     <button id="adicionar" type="button" class="btn btn-primary btn-cons">
-                                                        <i class="icon-plus"></i>&nbsp;&nbsp;&nbsp;Nova Página do Sistema
+                                                        <i class="icon-plus"></i>&nbsp;&nbsp;&nbsp;Nova Ação do Sistema
                                                     </button>
                                                 <?php endif; ?>
                                             </div>
@@ -63,28 +63,28 @@
                                                 <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 20%;">Controller</th>
                                                 <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 40%;">Action</th>
                                                 <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Rendering engine: activate to sort column ascending" style="width: 10%;">Permissão</th>
-                                                <?php if ($editarPagina || $deletarPagina) : ?>
+                                                <?php if ($editarAcao || $deletarAcao) : ?>
                                                     <th class="sorting" role="columnheader" tabindex="0" aria-controls="example2" rowspan="1" colspan="1" aria-label="Platform(s): activate to sort column ascending" style="width: 20%;">Ação</th>
                                                 <?php endif; ?>
                                             </tr>
                                         </thead>
                                         <tbody role="alert" aria-live="polite" aria-relevant="all">
-                                            <?php if (count($paginas) > 0) : ?>
-                                                <?php foreach ($paginas as $pagina) : ?>
-                                                    <tr id="<?= $pagina->id ?>" class="gradeX odd">
-                                                        <td class=" "><?= $pagina->modulo ?></td>
-                                                        <td class=" "><?= $pagina->alias_controller ?></td>
-                                                        <td class=" "><?= $pagina->alias_action ?></td>
-                                                        <td class=" "><?= ($pagina->ativo == 1) ? 'Sim' : 'Não' ?></td>
-                                                        <?php if ($editarPagina || $deletarPagina) : ?>
+                                            <?php if (count($acoes) > 0) : ?>
+                                                <?php foreach ($acoes as $acao) : ?>
+                                                    <tr id="<?= $acao->id ?>" class="gradeX odd">
+                                                        <td class=" "><?= $acao->modulo ?></td>
+                                                        <td class=" "><?= $acao->alias_controller ?></td>
+                                                        <td class=" "><?= $acao->alias_action ?></td>
+                                                        <td class=" "><?= ($acao->permissao == 1) ? 'Sim' : 'Não' ?></td>
+                                                        <?php if ($editarAcao || $deletarAcao) : ?>
                                                             <td class="center ">
-                                                                <?php if ($editarPagina) : ?>
-                                                                    <button id="<?= $pagina->id ?>" type="button" class="btn btn-default btn-xs btn-mini editar">
+                                                                <?php if ($editarAcao) : ?>
+                                                                    <button id="<?= $acao->id ?>" type="button" class="btn btn-default btn-xs btn-mini editar">
                                                                         <i class="icon-pencil"></i>&nbsp;Editar
                                                                     </button>
                                                                 <?php endif; ?>
-                                                                <?php if ($deletarPagina) : ?>
-                                                                    <button id="<?= $pagina->id ?>" name="<?= $pagina->alias_action ?>" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-danger btn-xs btn-mini deletar">
+                                                                <?php if ($deletarAcao) : ?>
+                                                                    <button id="<?= $acao->id ?>" name="<?= $acao->alias_action ?>" type="button" data-toggle="modal" data-target="#myModal" class="btn btn-danger btn-xs btn-mini deletar">
                                                                         <i class="icon-trash"></i>&nbsp;Deletar
                                                                     </button>
                                                                 <?php endif; ?>
@@ -101,8 +101,8 @@
                                 </table>
                                 <!--<div class="row"><div class="col-md-12"><div class="dataTables_paginate paging_bootstrap pagination"><ul><li class="prev disabled"><a href="#"><i class="icon-chevron-left"></i></a></li><li class="active"><a href="#">1</a></li><li><a href="#">2</a></li><li><a href="#">3</a></li><li><a href="#">4</a></li><li><a href="#">5</a></li><li class="next"><a href="#"><i class="icon-chevron-right"></i></a></li></ul></div><div class="dataTables_info" id="example2_info">Showing <b>1 to 10</b> of 57 entries</div></div></div></div>-->
                             </div>
-                            <input id="idPagina" type="hidden" name="idPagina">
-                            <input id="nomePagina" type="hidden" name="nomePagina">
+                            <input id="idAcao" type="hidden" name="idAcao">
+                            <input id="nomeAcao" type="hidden" name="nomeAcao">
                         </form>
                     </div>
                 </div>
@@ -145,7 +145,7 @@
     pagina = 0;
 
     $("#adicionar").click(function () {
-        form.attr('action', '/admin/pagina/criar');
+        form.attr('action', '<?= base_url('admin/acao/criar') ?>');
         form.submit();
     });
 
@@ -154,7 +154,7 @@
         id = me.attr("id");
 
         $("#idPagina").attr('value', id);
-        form.attr('action', '/admin/pagina/editar');
+        form.attr('action', '<?= base_url('admin/acao/editar') ?>');
         form.submit();
     });
 
@@ -180,9 +180,9 @@
         id = pagina.attr("id");
         nome = pagina.attr("name");
 
-        $("#idPagina").attr('value', id);
-        $("#nomePagina").attr('value', nome);
-        form.attr('action', '/admin/pagina/deletar');
+        $("#idAcao").attr('value', id);
+        $("#nomeAcao").attr('value', nome);
+        form.attr('action', '<?= base_url('admin/acao/deletar') ?>');
         form.submit();
     });
 </script>

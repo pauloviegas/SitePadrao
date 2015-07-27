@@ -16,27 +16,37 @@ class acaoModel extends abstractModel
      */
     public function __construct()
     {
-        
+
         parent::__construct();
+        $this->load->model('permissaoModel');
     }
 
-    public function recuperaPermissaoDivididaPorController($idPerfil, $modulo = 'social')
+    public function recuperaAcoesParaPermissao($idGrupo)
     {
-        $listaPermissoes = $this->recuperaPorParametro(NULL, Array('permissao' => 1, 'modulo' => $modulo));
-        $permissoesPerfil = $this->permissaoModel->recuperaPorParametro(NULL, Array('id_perfil' => $idPerfil));
-        $permissoes = Array();
-        foreach ($listaPermissoes as $permissao)
+        $permissoes = $this->recupera(Array('permissao' => 1));
+        $permissoesGrupo = $this->permissaoModel->recupera(Array('id_grupo' => $idGrupo));
+        $idPermissoesGrupo = Array();
+        if (count($permissoesGrupo) > 0)
         {
-            $permissao->perfilPermissao = 0;
-            foreach ($permissoesPerfil as $permissaoPerfil)
+            foreach ($permissoesGrupo as $permissaoGrupo)
             {
-                if ($permissao->id == $permissaoPerfil->id_acao)
-                {
-                    $permissao->perfilPermissao = 1;
-                }
+                $idPermissoesGrupo[] = $permissaoGrupo->id_acao;
             }
-            $permissoes[$permissao->alias_controller][] = $permissao;
         }
-        return $permissoes;
+        foreach ($permissoes as $permissao)
+        {
+            if (in_array($permissao->id, $idPermissoesGrupo))
+            {
+                $permissao->permitido = 1;
+            }
+            else
+            {
+                $permissao->permitido = 0;
+            }
+            $controllers[$permissao->alias_controller][] = $permissao;
+        }
+
+        return $controllers;
     }
+
 }

@@ -149,6 +149,16 @@ class abstractModel extends CI_Model
             }
         }
     }
+    
+    public function recupera(Array $parametro = NULL, Array $ordem = NULL, $limite = NULL)
+    {
+        ($ordem) ? $this->db->order_by($ordem) : '';
+        ($parametro) ? $this->db->where($parametro) : '';
+        ($limite) ? $this->db->limit($limite) : '';
+        $query = $this->db->get($this->_table);
+        return $query->result();
+        
+    }
 
     /**
      * Recuperas todas as linas (da tabela setada na classe filha) que não estão logicamnete excuidas.

@@ -13,7 +13,7 @@ class AuthModel extends abstractModel
     {
 
         parent::__construct();
-        $this->load->model('usuarioModel');
+        $this->load->model('ViewUsuarioGrupoModel');
     }
 
     /**
@@ -31,7 +31,7 @@ class AuthModel extends abstractModel
      */
     public function logar($email, $senha)
     {
-        $usuario = $this->usuarioModel->recuperaPorParametro(NULL, Array('senha' => sha1($senha), 'email' => $email));
+        $usuario = $this->ViewUsuarioGrupoModel->recupera(Array('senha' => sha1($senha), 'email' => $email));
         if (!$usuario)
         {
             $this->authModel->logout();
@@ -75,8 +75,7 @@ class AuthModel extends abstractModel
      */
     public function verificaLogin()
     {
-        $url = $this->recuperaUrl();
-        if ($this->session->userdata('usuario') || $url == 'social/usuario/inserir')
+        if ($this->session->userdata('usuario'))
         {
             return TRUE;
         }

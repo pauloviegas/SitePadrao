@@ -39,7 +39,7 @@
             <form id="form" method="post">
                 <div class="grid simple">
                     <div class="grid-title no-border">
-                        <h4>Cadastrar Grupo de Usuário</h4>
+                        <h4>Editar Grupo de Usuário</h4>
                     </div>
                     <div class="grid-body no-border"><br>
                         <div class="row">
@@ -47,12 +47,12 @@
                                 <div class="form-group">
                                     <label class="form-label">Nome do Grupo de Usuário</label>
                                     <div class="controls">
-                                        <input type="text" name="grupo" value="<?= (set_value('grupo')) ? set_value('grupo') : $grupo->grupo ?>" class="form-control">
+                                        <input type="text" name="grupo" value="<?= (set_value('grupo')) ? set_value('grupo') : $grupo[0]->grupo ?>" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="controls">
-                                        <input type="hidden" name="id" value="<?= $grupo->id ?>">
+                                        <input type="hidden" name="id" value="<?= $grupo[0]->id ?>">
                                         <button id="alterar" type="button" class="btn btn-primary btn-cons">Alterar</button>
                                     </div>
                                 </div>

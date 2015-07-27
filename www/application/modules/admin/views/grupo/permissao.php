@@ -40,14 +40,14 @@
                 </div>
             <?php endif; ?>
 
-            <?php foreach ($paginas as $pagina => $permissoes) : ?>
+            <?php foreach ($controllers as $controller => $permissoes) : ?>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-12">
                                 <div class="grid simple" style="opacity: 1; z-index: 0;">
                                     <div class="grid-title" style="height: 50px;">
-                                        <h4>Permissão de <?= ucfirst($pagina) ?></h4>
+                                        <h4>Permissão de <?= ucfirst($controller) ?></h4>
                                         <div class="tools">
                                             <a href="javascript:;" class="expand"></a>
                                         </div>
@@ -55,11 +55,11 @@
                                     <div class="grid-body" style="display: none;">
                                         <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto;">
                                             <div class="scroller" style="overflow: hidden; width: auto;">
-                                                <?php foreach ($permissoes as $permissao => $action) : ?>
+                                                <?php foreach ($permissoes as $permissao) : ?>
                                                     <div class="row-fluid">
                                                         <div class="checkbox check-primary checkbox-circle">
-                                                            <input class="permissao" name="<?= $action['action'] ?>" value="<?= $action['id'] ?>" id="checkbox<?= $action['id'] ?>" type="checkbox" value="<?= $action['id'] ?>" <?= (in_array($action['id'], $permitidos)) ? 'checked' : '' ?>>
-                                                            <label for="checkbox<?= $action['id'] ?>"><?= $action['action'] ?></label>
+                                                            <input class="permissao" value="<?= $permissao->id ?>" id="checkbox<?= $permissao->id ?>" type="checkbox" <?= ($permissao->permitido) ? 'checked' : '' ?>>
+                                                            <label for="checkbox<?= $permissao->id ?>"><?= $permissao->alias_action ?></label>
                                                         </div>
                                                     </div>
                                                 <?php endforeach; ?>
@@ -76,33 +76,21 @@
     </div>
 
 
-
-
     <!-- END CONTAINER --> 
     <?= $rodape ?>
 
     <script>
 
         $(".permissao").change(function () {
-            idGrupo = $("#idGrupo").val();
-            idPagina = $(this).val();
-            nomePagina = $(this).attr("name");
+            var idAcao = $(this).val();
             $.ajax({
-                url: '/admin/grupo/atualizarPermissao',
+                url: '<?= base_url('admin/grupo/atualizarPermissao') ?>',
                 type: 'post',
                 data: {
                     'idGrupo': <?= $id ?>,
-                    'idPagina': idPagina
+                    'idAcao': idAcao
                 },
-                dataRype: "json",
-                success: function (resposta) {
-                    valor = resposta.match(/true/);
-                    valor = false;
-                    if (!valor)
-                    {
-                        //Put this your code
-                    }
-                }
+                dataRype: "json"
             });
         });
     </script>

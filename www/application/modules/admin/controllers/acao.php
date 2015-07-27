@@ -1,20 +1,21 @@
 <?php
 
-class Pagina extends AdminController
+class Acao extends AdminController
 {
 
     public function __construct()
     {
 
         parent::__construct();
+        $this->load->model('acaoModel');
     }
 
     public function index()
     {
         //Permissões
-        $this->data['adicionarPagina'] = $this->viewgrupopaginaModel->verificaPermissao('admin/pagina/criar');
-        $this->data['editarPagina'] = $this->viewgrupopaginaModel->verificaPermissao('admin/pagina/editar');
-        $this->data['deletarPagina'] = $this->viewgrupopaginaModel->verificaPermissao('admin/pagina/deletar');
+        $this->data['adicionarAcao'] = $this->viewGrupoAcaoModel->verificaPermissao('admin/acao/criar');
+        $this->data['editarAcao'] = $this->viewGrupoAcaoModel->verificaPermissao('admin/acao/editar');
+        $this->data['deletarAcao'] = $this->viewGrupoAcaoModel->verificaPermissao('admin/acao/deletar');
 
         //Avisos
         $this->data['sucesso'] = ($this->session->flashdata('sucesso')) ? $this->session->flashdata('sucesso') : FALSE;
@@ -23,10 +24,12 @@ class Pagina extends AdminController
         $this->data['erro'] = ($this->session->flashdata('erro')) ? $this->session->flashdata('erro') : FALSE;
 
         //Recuperação de Dados
-        $this->data['paginas'] = $this->paginaModel->ListarTodasAsPaginas();
+        $this->data['acoes'] = $this->acaoModel->recupera();
+        //var_dump($this->acaoModel->recupera());
+        //die();
 
         //Redirecionamento
-        $this->load->view('admin/pagina/index', $this->data);
+        $this->load->view('admin/acao/index', $this->data);
     }
 
     public function criar()
@@ -38,7 +41,7 @@ class Pagina extends AdminController
         $this->data['erro'] = ($this->session->flashdata('erro')) ? $this->session->flashdata('erro') : FALSE;
 
         //Redirecionamento
-        $this->load->view('admin/pagina/criar', $this->data);
+        $this->load->view('admin/acao/criar', $this->data);
     }
 
     public function editar($id = NULL)
@@ -50,11 +53,11 @@ class Pagina extends AdminController
         $this->data['erro'] = ($this->session->flashdata('erro')) ? $this->session->flashdata('erro') : FALSE;
 
         //Recuperação de Dados
-        $newid = ($this->uri->segment(4)) ? $this->uri->segment(4) : ($id ? $id : $this->_request['idPagina']);
-        $this->data['pagina'] = $this->paginaModel->recuperaPaginaPorId($newid);
+        $newid = ($this->uri->segment(4)) ? $this->uri->segment(4) : ($id ? $id : $this->_request['idAcao']);
+        $this->data['acao'] = $this->acaoModel->recupera(Array('id' => $newid));
 
         //Redirecionamento
-        $this->load->view('admin/pagina/editar', $this->data);
+        $this->load->view('admin/acao/editar', $this->data);
     }
 
     public function inserir()
@@ -71,21 +74,21 @@ class Pagina extends AdminController
         if ($this->form_validation->run())
         {
 
-            $result = $this->paginaModel->inserir($dados);
+            $result = $this->acaoModel->inserir($dados);
             if ($result)
             {
 
-                $this->session->set_flashdata('sucesso', 'A Página do Sistema foi'
+                $this->session->set_flashdata('sucesso', 'A Ação do Sistema foi'
                         . ' inserida com sucesso!');
-                redirect('admin/pagina/index');
+                redirect('admin/acao/index');
             }
             else
             {
 
                 $this->session->set_flashdata(
-                        'erro', 'Ops... Ocorreu um erro e a Página do Sistema não'
+                        'erro', 'Ops... Ocorreu um erro e a Ação do Sistema não'
                         . ' foi inserida! Por favor, tente mais novamente.');
-                redirect('admin/pagina/criar');
+                redirect('admin/acao/criar');
             }
         }
         else
@@ -109,21 +112,21 @@ class Pagina extends AdminController
         if ($this->form_validation->run())
         {
 
-            $result = $this->paginaModel->alterarPagina($dados);
+            $result = $this->acaoModel->alterar($dados);
             if ($result)
             {
 
-                $this->session->set_flashdata('sucesso', 'A Página do Sistema ('
+                $this->session->set_flashdata('sucesso', 'A Ação do Sistema ('
                         . $dados['alias_action'] . ') foi alterada com sucesso!');
-                redirect('admin/pagina/index');
+                redirect('admin/acao/index');
             }
             else
             {
 
                 $this->session->set_flashdata(
-                        'erro', 'Ops... Ocorreu um erro ao alterar a Página do Sistema ('
+                        'erro', 'Ops... Ocorreu um erro ao alterar a Ação do Sistema ('
                         . $dados['alias_action'] . '), por favor, tente novamente.');
-                redirect('admin/pagina/editar/' . $dados['id']);
+                redirect('admin/acao/editar/' . $dados['id']);
             }
         }
         else
@@ -138,19 +141,19 @@ class Pagina extends AdminController
 
         $dados = $this->_request;
 
-        if ($this->paginaModel->deletarPagina($dados['idPagina']))
+        if ($this->acaoModel->deletar($dados['idAcao']))
         {
 
-            $this->session->set_flashdata('sucesso', 'A Página do Sistema ('
-                    . $dados['nomePagina'] . ') foi excluida com sucesso!');
-            redirect('admin/pagina/index');
+            $this->session->set_flashdata('sucesso', 'A Ação do Sistema ('
+                    . $dados['nomeAcao'] . ') foi excluida com sucesso!');
+            redirect('admin/acao/index');
         }
         else
         {
             $this->session->set_flashdata(
-                    'erro', 'Ops... Ocorreu um erro e a Página do Sistema (' 
-                    . $dados['nomePagina'] . ') não foi excluida! Por vavor, tente novamente.');
-            redirect('admin/pagina/index');
+                    'erro', 'Ops... Ocorreu um erro e a Ação do Sistema (' 
+                    . $dados['nomeAcao'] . ') não foi excluida! Por vavor, tente novamente.');
+            redirect('admin/acao/index');
         }
     }
 

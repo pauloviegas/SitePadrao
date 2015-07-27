@@ -35,11 +35,11 @@
                     <?= $erro ?>
                 </div>
             <?php endif; ?>
-            
+
             <form id="form" method="post">
                 <div class="grid simple">
                     <div class="grid-title no-border">
-                        <h4>Cadastrar Usuário</h4>
+                        <h4>Editar Usuário</h4>
                     </div>
                     <div class="grid-body no-border"><br>
                         <div class="row">
@@ -47,7 +47,7 @@
                                 <div class="form-group">
                                     <label class="form-label">Nome</label>
                                     <div class="controls">
-                                        <input type="text" name="nome" value="<?= (set_value('nome')) ? set_value('nome') : $usuario->nome ?>" class="form-control">
+                                        <input type="text" name="nome" value="<?= (set_value('nome')) ? set_value('nome') : $usuario[0]->nome ?>" class="form-control">
                                     </div>
                                 </div>
                                 <?php if ($trocargrupo) : ?>
@@ -58,7 +58,7 @@
                                                 <?php if (count($grupos) > 0) : ?>
                                                     <option value="0">Selecione um grupo de usuário</option>
                                                     <?php foreach ($grupos as $grupo) : ?>
-                                                        <option value="<?= $grupo->id ?>" <?= ($usuario->id_grupo == $grupo->id) ? 'selected' : '' ?> ><?= $grupo->grupo ?></option>
+                                                        <option value="<?= $grupo->id ?>" <?= ($usuario[0]->id_grupo == $grupo->id) ? 'selected' : '' ?> ><?= $grupo->grupo ?></option>
                                                     <?php endforeach; ?>
                                                 <?php else : ?>
                                                     <option value="0">Nenhum Grupo de usuário cadastrado!</option>
@@ -67,15 +67,17 @@
                                         </div>
                                     </div>
                                 <?php endif; ?>
-                                <?php if ($this->data['user']->id == $usuario->id || $trocarSenhaOutrosUsuarios) : ?>
-                                    <div class="form-group">
-                                        <label class="form-label">Senha</label>
-                                        <span class="help">Senha do usuário logado</span>
-                                        <span class="help">*Minimo de 4 e Máximo de 12 caracteres</span>
-                                        <div class="controls">
-                                            <input type="password" name="senhaantiga" value="" class="form-control">
+                                <?php if ($this->session->userdata('usuario')->id == $usuario[0]->id || $trocarSenhaOutrosUsuarios) : ?>
+                                    <?php if ($this->session->userdata('usuario')->id == $usuario[0]->id) : ?>
+                                        <div class="form-group">
+                                            <label class="form-label">Senha</label>
+                                            <span class="help">Senha do usuário logado</span>
+                                            <span class="help">*Minimo de 4 e Máximo de 12 caracteres</span>
+                                            <div class="controls">
+                                                <input type="password" name="senhaantiga" value="" class="form-control">
+                                            </div>
                                         </div>
-                                    </div>
+                                    <?php endif; ?>
                                     <div class="form-group">
                                         <label class="form-label">Nova Senha</label>
                                         <span class="help">*Minimo de 4 e Máximo de 12 caracteres</span>
@@ -95,12 +97,12 @@
                                     <label class="form-label">E-mail</label>
                                     <span class="help">exemplo@exemplo.com ou exemplo@exemplo.com.br</span>
                                     <div class="controls">
-                                        <input type="text" name="email" value="<?= (set_value('email')) ? set_value('email') : $usuario->email ?>" class="form-control">
+                                        <input type="text" name="email" value="<?= (set_value('email')) ? set_value('email') : $usuario[0]->email ?>" class="form-control">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="controls">
-                                        <input type="hidden" name="id" value="<?= $usuario->id ?>">
+                                        <input type="hidden" name="id" value="<?= $usuario[0]->id ?>">
                                         <button id="alterar" type="button" class="btn btn-primary btn-cons">Alterar</button>
                                     </div>
                                 </div>

@@ -42,12 +42,12 @@ class AdminController extends MY_Controller
         if (!$this->authModel->verificaLogin())
         {
             $this->session->set_flashdata('erro', 'Para acessar esta página primeiramente você deve realizar seu login!!!');
-            redirect('social/serviceauth/index');
+            redirect('admin/serviceauth/index');
         }
         if (!$this->viewGrupoAcaoModel->verificaPermissao())
         {
             $this->session->set_flashdata('erro', 'Desculpe, mas você não tem permissão para acessar esta página!!!');
-            redirect('social/home/index');
+            redirect('admin/home/index');
         }
         $this->data['nomeUsuarioLogado'] = explode(' ', $this->session->userdata('usuario')->nome);
         $this->data['topo'] = $this->load->view('layout/topo', $this->data, TRUE);

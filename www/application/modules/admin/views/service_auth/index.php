@@ -52,6 +52,16 @@
                 </div>
             <?php endif; ?>
 
+            <div class="row" style="margin-bottom: -100px;">
+                <div class="col-md-4">
+                </div>
+                <div class="col-md-4" style="text-align: center;">
+                    <img src="<?= $url_base . 'assets/img/logo.png' ?>" class="logo" width="300"/>
+                </div>
+                <div class="col-md-4">
+                </div>
+            </div>
+
             <div class="row login-container column-seperation">  
                 <div class="col-md-5 col-md-offset-1" style="min-height: 260px;">
                     <h2><?= $alliasNomeProjeto ?></h2>

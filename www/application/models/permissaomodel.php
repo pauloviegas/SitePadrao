@@ -10,54 +10,18 @@ class PermissaoModel extends abstractModel
 
         parent::__construct();
     }
-
-    public function recuperaPermissaoPorIdGrupo($id)
+    
+    public function atualizarPermissao($idGrupo, $idAcao)
     {
-
-        $query = $this->db->get_where($this->_table, Array('id_grupo' => $id));
-        return $query->result();
-    }
-
-    public function atualizarPermissao(Array $dados)
-    {
-
-       $query =  $this->db->get_where($this->_table, Array(
-            'id_grupo' => $dados['idGrupo'],
-            'id_pagina' => $dados['idPagina']));
-        if ($query->num_rows())
+        $acao = $this->recupera(Array('id_grupo' => $idGrupo, 'id_acao' => $idAcao));
+        if ($acao)
         {
-
-            $this->db->delete($this->_table, Array(
-                'id_grupo' => $dados['idGrupo'],
-                'id_pagina' => $dados['idPagina']));
-            return $this->db->affected_rows();
+            $retorno = $this->deletar($acao[0]->id);
         }
         else
         {
-            
-            $this->db->insert($this->_table, Array(
-                'id_grupo' => $dados['idGrupo'],
-                'id_pagina' => $dados['idPagina']));
-            return $this->db->affected_rows();
+            $retorno = $this->inserir(Array('id_grupo' => $idGrupo, 'id_acao' => $idAcao));
         }
+        return $retorno;
     }
-    
-    public function checados($id_grupo)
-    {
-        
-        $this->db->select('id_pagina');
-        $query = $this->db->get_where($this->_table, Array('id_grupo' => $id_grupo));
-        $dados = $query->result();
-        
-        $newdado = Array();
-        
-        foreach ($dados as $dado)
-        {
-            
-            $newdado[] = $dado->id_pagina;
-        }
-        
-        return $newdado;
-    }
-
 }

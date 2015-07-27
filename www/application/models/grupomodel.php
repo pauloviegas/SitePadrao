@@ -1,9 +1,9 @@
 <?php
 
-class UsuarioModel extends abstractModel
+class GrupoModel extends abstractModel
 {
 
-    protected $_table = 'usu_usuario';
+    protected $_table = 'usu_grupo';
 
     public function __construct()
     {

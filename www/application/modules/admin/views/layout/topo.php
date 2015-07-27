@@ -46,13 +46,13 @@
                     </li>
                 </ul>
                 <i style="margin-left: 25%">
-                    <a href="<?= base_url('admin/home/home') ?>">
-                        <img src="<?= $url_base . 'assets/img/logo_linc.png' ?>" class="logo" width="53" height="30"/>
+                    <a href="<?= base_url('admin/home/index') ?>">
+                        <img src="<?= $url_base . 'assets/img/logo.png' ?>" class="logo" width="53" height="30"/>
                     </a>
                 </i>
                 <ul class="nav pull-right notifcation-center">
                     <li class="dropdown" id="header_task_bar">
-                        <a href="<?= base_url('admin/home/home') ?>" class="dropdown-toggle active" data-toggle="">
+                        <a href="<?= base_url('admin/home/index') ?>" class="dropdown-toggle active" data-toggle="">
                             <div class="iconset top-home"></div>
                         </a>
                     </li>
