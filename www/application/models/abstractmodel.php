@@ -160,54 +160,6 @@ class abstractModel extends CI_Model
         
     }
 
-    /**
-     * Recuperas todas as linas (da tabela setada na classe filha) que não estão logicamnete excuidas.
-     * @param NULL
-     * @author Paulo Viegas <pauloviegas93@gmail.com>
-     * @return Array Todas as linhas da tabela;
-     */
-    public function recuperaTodos($parametro = NULL, $ordem = NULL, $excluido = NULL)
-    {
-
-        $colunasBanco = $this->descreverTabela();
-        ($ordem && $parametro) ? $this->db->order_by($parametro, $ordem) : '';
-        if (in_array('excluido', $colunasBanco) && !$excluido)
-        {
-            $query = $this->db->get_where($this->_table, Array('excluido' => 0));
-        }
-        else
-        {
-            $query = $this->db->get($this->_table);
-        }
-
-        return $query->result();
-    }
-
-    /**
-     * Recuperas todas as linhas (da tabela setada na classe filha) por id, caso exista, ou a partir do segundo parâmetro, caso o id seja NULL e segundo parâmetro seja populado.
-     * <b>OBS:</b> Caso sejam setados os dois parâmetros o id que será o parâmetro para busca.
-     * @param Int $id corresponde ao id linha a ser recuperada;
-     * @param Array $parametrosBusca a chave corresponde a coluna de busca e o valor corresponde ao valor usado como filtro de busca;
-     * @author Paulo Viegas <pauloviegas93@gmail.com>
-     * @return Array Todas as linhas afetadas pelo(s) parâmetro(s) de busca;
-     */
-    public function recuperaPorParametro($id = NULL, Array $parametrosBusca = NULL, Array $ordens = NULL)
-    {
-        if ($id)
-        {
-            $parametrosBusca = Array('id' => $id);
-        }
-        if (count($ordens) > 0)
-        {
-            foreach ($ordens as $coluna => $ordenacao)
-            {
-                $this->db->order_by($coluna, $ordenacao);
-            }
-        }
-        $query = $this->db->get_where($this->_table, $parametrosBusca);
-        return $query->result();
-    }
-
     public function recuperaUrl()
     {
         $modulo = $this->uri->segment('1');

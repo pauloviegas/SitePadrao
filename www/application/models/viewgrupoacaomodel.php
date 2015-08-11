@@ -23,7 +23,7 @@ class viewGrupoAcaoModel extends abstractModel
 
     public function gerarAcoesSemPermissao()
     {
-        $Permissoes = $this->acaoModel->recuperaPorParametro(NULL, Array('permissao' => 0));
+        $Permissoes = $this->acaoModel->recupera(Array('permissao' => 0));
         foreach ($Permissoes as $Permissao)
         {
             $novoObjeto = new stdClass();
@@ -44,7 +44,7 @@ class viewGrupoAcaoModel extends abstractModel
      */
     public function gerarAcaoComPermissao($idGrupo)
     {
-        $permissoesGrupo = $this->recuperaPorParametro(NULL, Array('id_grupo' => $idGrupo));
+        $permissoesGrupo = $this->recupera(Array('id_grupo' => $idGrupo));
         return $permissoesGrupo;
     }
 

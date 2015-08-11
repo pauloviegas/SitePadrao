@@ -142,8 +142,6 @@
 <script>
     var form = $("#form");
 
-    pagina = 0;
-
     $("#adicionar").click(function () {
         form.attr('action', '<?= base_url('admin/acao/criar') ?>');
         form.submit();
@@ -153,7 +151,7 @@
         me = $(this);
         id = me.attr("id");
 
-        $("#idPagina").attr('value', id);
+        $("#idAcao").attr('value', id);
         form.attr('action', '<?= base_url('admin/acao/editar') ?>');
         form.submit();
     });
@@ -167,8 +165,8 @@
 
 
     $(".deletar").click(function () {
-        pagina = $(this);
-        name = pagina.attr("name");
+        acao = $(this);
+        name = acao.attr("name");
 
         $("#myModal").show();
         $("#myModalTitulo").html("Aviso: Deletar Usuário");
@@ -177,8 +175,8 @@
     });
 
     $("#deletar").click(function () {
-        id = pagina.attr("id");
-        nome = pagina.attr("name");
+        id = acao.attr("id");
+        nome = acao.attr("name");
 
         $("#idAcao").attr('value', id);
         $("#nomeAcao").attr('value', nome);
